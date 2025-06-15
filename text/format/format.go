@@ -17,10 +17,10 @@ package format
 import (
 	"strings"
 
+	"github.com/Gealber/solana-go"
+	"github.com/Gealber/solana-go/text"
+	. "github.com/Gealber/solana-go/text"
 	"github.com/davecgh/go-spew/spew"
-	"github.com/gagliardetto/solana-go"
-	"github.com/gagliardetto/solana-go/text"
-	. "github.com/gagliardetto/solana-go/text"
 )
 
 func Program(name string, programID solana.PublicKey) string {

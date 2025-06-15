@@ -17,8 +17,8 @@ package ws
 import (
 	"context"
 
-	"github.com/gagliardetto/solana-go"
-	"github.com/gagliardetto/solana-go/rpc"
+	"github.com/Gealber/solana-go"
+	"github.com/Gealber/solana-go/rpc"
 )
 
 type ProgramResult struct {
