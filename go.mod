@@ -1,8 +1,9 @@
 module github.com/gagliardetto/solana-go
 
-go 1.19
+go 1.24.2
 
 require (
+	github.com/Gealber/base58 v0.0.1
 	github.com/gagliardetto/binary v0.8.0
 	github.com/gagliardetto/gofuzz v1.2.2
 	github.com/gagliardetto/treeout v0.1.4

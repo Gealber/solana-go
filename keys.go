@@ -30,7 +30,8 @@ import (
 	"sort"
 
 	"filippo.io/edwards25519"
-	"github.com/mr-tron/base58"
+	"github.com/Gealber/base58"
+	mtronB58 "github.com/mr-tron/base58"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/bsontype"
 )
@@ -57,7 +58,7 @@ func MustPrivateKeyFromBase58(in string) PrivateKey {
 }
 
 func PrivateKeyFromBase58(privkey string) (PrivateKey, error) {
-	res, err := base58.Decode(privkey)
+	res, err := mtronB58.Decode(privkey)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +107,7 @@ func PrivateKeyFromSolanaKeygenFileBytes(content []byte) (PrivateKey, error) {
 }
 
 func (k PrivateKey) String() string {
-	return base58.Encode(k)
+	return mtronB58.Encode(k)
 }
 
 func NewRandomPrivateKey() (PrivateKey, error) {
@@ -188,21 +189,22 @@ func MustPublicKeyFromBase58(in string) PublicKey {
 // PublicKeyFromBase58 creates a PublicKey from a base58 encoded string.
 // NOTE: it will accept on- and off-curve pubkeys.
 func PublicKeyFromBase58(in string) (out PublicKey, err error) {
-	val, err := base58.Decode(in)
-	if err != nil {
-		return out, fmt.Errorf("decode: %w", err)
-	}
+	return base58.Decode32(in)
+	// val, err := base58.Decode(in)
+	// if err != nil {
+	// 	return out, fmt.Errorf("decode: %w", err)
+	// }
 
-	if len(val) != PublicKeyLength {
-		return out, fmt.Errorf("invalid length, expected %v, got %d", PublicKeyLength, len(val))
-	}
+	// if len(val) != PublicKeyLength {
+	// 	return out, fmt.Errorf("invalid length, expected %v, got %d", PublicKeyLength, len(val))
+	// }
 
-	copy(out[:], val)
-	return
+	// copy(out[:], val)
+	// return
 }
 
 func (p PublicKey) MarshalText() ([]byte, error) {
-	return []byte(base58.Encode(p[:])), nil
+	return []byte(base58.Encode32(p)), nil
 }
 
 func (p *PublicKey) UnmarshalText(data []byte) error {
@@ -210,7 +212,7 @@ func (p *PublicKey) UnmarshalText(data []byte) error {
 }
 
 func (p PublicKey) MarshalJSON() ([]byte, error) {
-	return json.Marshal(base58.Encode(p[:]))
+	return json.Marshal(base58.Encode32(p))
 }
 
 func (p *PublicKey) UnmarshalJSON(data []byte) (err error) {
@@ -309,7 +311,7 @@ func (p *PublicKey) Set(s string) (err error) {
 }
 
 func (p PublicKey) String() string {
-	return base58.Encode(p[:])
+	return base58.Encode32(p)
 }
 
 // Short returns a shortened pubkey string,
